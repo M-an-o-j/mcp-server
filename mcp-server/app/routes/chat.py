@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from pydantic import BaseModel
 from services.dispatcher import dispatch_message
 
@@ -11,6 +11,6 @@ class ChatResponse(BaseModel):
     response: str
 
 @router.post("/", response_model=ChatResponse)
-async def chat(req: ChatRequest):
-    reply = await dispatch_message(req.message)
+async def chat(req: ChatRequest, session_id: str = Query(default="default_session")):
+    reply = await dispatch_message(req.message, session_id=session_id)
     return ChatResponse(response=reply)
