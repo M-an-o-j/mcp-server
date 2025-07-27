@@ -10,7 +10,7 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
 
-@router.post("/", response_model=ChatResponse)
+@router.post("/")
 async def chat(req: ChatRequest, session_id: str = Query(default="default_session")):
     reply = await dispatch_message(req.message, session_id=session_id)
-    return ChatResponse(response=reply)
+    return reply

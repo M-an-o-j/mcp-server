@@ -18,6 +18,7 @@ async def dispatch_message(message: str, session_id: str = "default_session") ->
     history = await context.get()
     prompt = build_prompt(message, history)
     llm_response = await call_llm(prompt)
+    # print(llm_response.name,"response")
     await context.clear()
     # await context.add("assistant", llm_response)
     return llm_response
